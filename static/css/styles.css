@@ -282,3 +282,9 @@
 .attribute {
   min-height: 25px;
 }
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}

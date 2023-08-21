@@ -15,7 +15,7 @@ class Card():
             'mana_cost': self.mana_cost,
             'name': self.name,
             'type_line': self.type_line,
-            'oracle_text': self.oracle_text.split('\n'),
+            'oracle_text': self.oracle_text.split('\n') if self.oracle_text else [],
             'set_name': self.set_name,
             'flavor_text': self.flavor_text,
             'power': self.power,

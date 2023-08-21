@@ -5,8 +5,8 @@ totalCost = 0;
 
 toastElement = document.getElementById('toast');
 
-attribute = 'text'
-cost = 8;
+attribute = null;
+cost = null;
 
 colors = {
     '{W}': 'white',
@@ -41,8 +41,8 @@ function showToast(message, seconds = 3) {
 function unhide(element, attribute) {
     if (attribute == 'mana-cost') {
         element = element.querySelector('.header');
-    } 
-
+    }
+    
     child = element.querySelector(`.${attribute}`);
 
     if (!child) {
@@ -53,6 +53,7 @@ function unhide(element, attribute) {
         showToast('Already visible!', 10);
         return 0;
     };
+
 
     child.style.visibility = 'visible';
 
@@ -123,9 +124,13 @@ function makeCardElement(card) {
         text.innerHTML += `<span class="text-line">${processManaCosts(line)}</span>`;
     })
 
+    if (text.innerHTML == '') {
+        text.innerHTML = '<span class="text-line">This card has no rules text. Sorry!</span>';
+    }
+
     flavorText = document.createElement('div');
     flavorText.classList.add('flavor-text');
-    flavorText.innerHTML = card.flavor_text;
+    flavorText.innerHTML = card.flavor_text || 'This card has no flavor text. Sorry!';
 
     cardElement.appendChild(header);
     cardElement.appendChild(type);
@@ -185,6 +190,10 @@ for (let i = 0; i < 16; i++) {
 }
 
 attributeElements = document.querySelectorAll('.attribute');
+rulesTextButton = document.getElementById('rulesTextButton');
+typeButton = document.getElementById('typeButton');
+manaCostButton = document.getElementById('manaCostButton');
+flavorTextButton = document.getElementById('flavorTextButton');
 
 attributeElements.forEach(element => {
     element.addEventListener('click', event => {
@@ -196,5 +205,21 @@ attributeElements.forEach(element => {
         element.classList.add('selected');
     });
 });
+
+function handleKeyDown(event) {
+    if (event.key == 'r') {
+        rulesTextButton.click();
+    } else if (event.key == 't') {
+        typeButton.click();
+    } else if (event.key == 'm') {
+        manaCostButton.click();
+    } else if (event.key == 'f') {
+        flavorTextButton.click();
+    }
+}
+
+document.addEventListener('keydown', handleKeyDown);
+
+rulesTextButton.click();
 
 addCost(0);
