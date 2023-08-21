@@ -4,13 +4,16 @@
   justify-content: space-between;
 }
 
+.total-cost {
+  text-align: center;
+}
+
 .one-char-button {
   display: inline-block;
   min-width: 30px;
   text-align: center;
   margin-right: 5px;
 }
-
 
 .hotkeys {
   position: fixed;
@@ -24,6 +27,10 @@
   width: 25%;
   overflow-y: auto;
   overflow-x: auto;
+}
+
+.selected {
+  font-weight: bold;
 }
 
 .container {
@@ -210,6 +217,7 @@
 }
 
 .magic-card .mana-cost {
+  visibility: hidden;
   font-size: 16px;
   color: #333;
   display: flex;
@@ -217,11 +225,13 @@
 }
 
 .magic-card .type {
+  visibility: hidden;
   font-size: 14px;
   color: #777;
 }
 
 .magic-card .text {
+  visibility: hidden;
   flex-grow: 1;
   margin-top: 10px;
   font-size: 14px;
@@ -234,6 +244,7 @@
 }
 
 .magic-card .flavor-text {
+  visibility: hidden;
   font-style: italic;
   color: #777;
 }
@@ -243,6 +254,7 @@
 }
 
 .magic-card .power-toughness {
+  visibility: hidden;
   font-size: 18px;
   font-weight: bold;
   padding: 5px 10px;
@@ -250,4 +262,23 @@
   border-radius: 5px;
   border: 1px solid #000;
   align-self: flex-end;
+}
+
+.purchase-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 400px;
+  overflow: auto;
+  padding: 20px;
+  grid-gap: 5px;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  align-self: center;
+  text-align: center; 
+}
+
+.attribute {
+  min-height: 25px;
 }

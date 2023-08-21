@@ -1,6 +1,12 @@
 URL = CONFIG.URL;
 
 grid = document.getElementById('cardsGrid');
+totalCost = 0;
+
+toastElement = document.getElementById('toast');
+
+attribute = 'text'
+cost = 8;
 
 colors = {
     '{W}': 'white',
@@ -10,6 +16,51 @@ colors = {
     '{G}': 'green',
     // This is sort of a lie but it's fine
     '{C}': 'generic'
+}
+
+function addCost(cost) {
+    totalCost += cost;
+    document.getElementById('totalCost').innerHTML = `Points remaining: ${100 - totalCost}`;
+}
+
+function showToast(message, seconds = 3) {
+    if (seconds == 0) {
+        toastElement.style.display = 'none';
+        return;
+    }
+
+    toastElement.textContent = message;
+    toastElement.style.display = 'inline-block';
+
+    setTimeout(function () {
+        toastElement.style.display = 'none';
+    }, seconds * 1000);
+}
+
+
+function unhide(element, attribute) {
+    if (attribute == 'mana-cost') {
+        element = element.querySelector('.header');
+    } 
+
+    child = element.querySelector(`.${attribute}`);
+
+    if (!child) {
+        return 0;
+    }
+
+    if (child.style.visibility === 'visible') {
+        showToast('Already visible!', 10);
+        return 0;
+    };
+
+    child.style.visibility = 'visible';
+
+    if (attribute == 'type') {
+        unhide(element, 'power-toughness');
+    }
+
+    return parseInt(cost);
 }
 
 function makeRequestOptions(body, method = 'POST') {
@@ -89,6 +140,16 @@ function makeCardElement(card) {
         cardElement.appendChild(powerToughness);
     }
 
+    cardElement.addEventListener('click', event => {
+        topmostElement = event.target;
+
+        while (!topmostElement.classList.contains('magic-card')) {
+            topmostElement = topmostElement.parentElement;
+        }
+
+        addCost(unhide(topmostElement, attribute));
+    });
+
     return cardElement;
 }
 
@@ -122,3 +183,18 @@ for (let i = 0; i < 16; i++) {
             grid.appendChild(makeCardElement(data));
         });
 }
+
+attributeElements = document.querySelectorAll('.attribute');
+
+attributeElements.forEach(element => {
+    element.addEventListener('click', event => {
+        attributeElements.forEach(element => {
+            element.classList.remove('selected');
+        });
+        attribute = element.getAttribute('data-attribute');
+        cost = element.getAttribute('data-cost');
+        element.classList.add('selected');
+    });
+});
+
+addCost(0);
