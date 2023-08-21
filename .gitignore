@@ -1,0 +1,9 @@
+__pycache__/
+local_settings.py
+request.py
+script.py
+keys.py
+*.deb
+config.js
+cards.json
+.idea/
