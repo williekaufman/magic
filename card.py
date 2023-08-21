@@ -8,6 +8,7 @@ class Card():
         self.flavor_text = d.get('flavor_text', '')
         self.power = d.get('power', '')
         self.toughness = d.get('toughness', '')
+        self.cmc = d.get('cmc', '')
 
     def to_dict(self):
         return {
@@ -18,5 +19,6 @@ class Card():
             'set_name': self.set_name,
             'flavor_text': self.flavor_text,
             'power': self.power,
-            'toughness': self.toughness
+            'toughness': self.toughness,
+            'cmc': self.cmc
         }

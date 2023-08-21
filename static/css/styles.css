@@ -168,40 +168,34 @@
 }
 
 .mana-symbol.white {
-  color: yellow;
-  background-color: yellow;
+  color: lightgoldenrodyellow;
+  background-color: white;
 }
 
 .mana-symbol.blue {
   color: blue;
   background-color: blue;
-
 }
 
 .mana-symbol.black {
   color: black;
   background-color: black;
-
 }
 
 .mana-symbol.red {
   color: red;
   background-color: red;
-  align-self: center;
-
 }
 
 .mana-symbol.green {
   color: green;
   background-color: green;
-  align-self: center;
-
 }
 
 .magic-card {
   border: 1px solid #000;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: yellow;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
@@ -237,6 +231,11 @@
 
 .text-line {
   margin-bottom: 10px;
+}
+
+.magic-card .flavor-text {
+  font-style: italic;
+  color: #777;
 }
 
 .magic-card .image {

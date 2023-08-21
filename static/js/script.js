@@ -8,6 +8,8 @@ colors = {
     '{B}': 'black',
     '{R}': 'red',
     '{G}': 'green',
+    // This is sort of a lie but it's fine
+    '{C}': 'generic'
 }
 
 function makeRequestOptions(body, method = 'POST') {
@@ -47,7 +49,7 @@ function makeCardElement(card) {
     header.classList.add('header');
 
     title = document.createElement('div');
-    title.classList.add('magic-card-title');
+    title.classList.add('title');
     title.innerHTML = card.name;
 
     manaCost = document.createElement('div');
@@ -70,10 +72,16 @@ function makeCardElement(card) {
         text.innerHTML += `<span class="text-line">${processManaCosts(line)}</span>`;
     })
 
+    flavorText = document.createElement('div');
+    flavorText.classList.add('flavor-text');
+    flavorText.innerHTML = card.flavor_text;
+
     cardElement.appendChild(header);
     cardElement.appendChild(type);
     cardElement.appendChild(text);
-    
+
+    cardElement.appendChild(flavorText);
+
     if (card.power && card.toughness) {
         powerToughness = document.createElement('div');
         powerToughness.classList.add('power-toughness');

@@ -11,7 +11,7 @@ import random
 import json
 
 app = Flask(__name__)
-# socketio = SocketIO(app)
+socketio = SocketIO(app)
 CORS(app)
 
 def new_game_id():
@@ -27,11 +27,37 @@ def new_game():
 
 @app.route("/random_card", methods=['GET'])
 def random_card():
-    card = random.choice(list(cards.values()))
+    name = request.args.get('name')
+    card = cards[name] if name else random.choice(list(cards.values()))
     return card.to_dict()
+
+real_types = [
+    'Creature',
+    'Artifact',
+    'Enchantment',
+    'Planeswalker',
+    'Instant',
+    'Sorcery',
+    'Land',
+    'Legendary',
+    'Tribal',
+    'World'
+]
+
+def include_card(card):
+    try:
+        types = card['type_line'].split(' ')
+        for t in types:
+            if t == '—':
+                break
+            if t not in real_types:
+                return False
+        return card['legalities']['vintage'] == 'legal' and not card.get('card_faces')
+    except KeyError:
+        return False
 
 if __name__ == "__main__":
     with open('cards.json') as f:
         cards = json.load(f)
-    cards = {card['name']: Card(card) for card in cards}
+    cards = {card['name']: Card(card) for card in cards if include_card(card)}
     app.run(host='0.0.0.0', port=5001)
