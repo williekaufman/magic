@@ -25,15 +25,15 @@ function addCost(cost) {
 
 function showToast(message, seconds = 3) {
     if (seconds == 0) {
-        toastElement.style.display = 'none';
+        toastElement.style.visibility = 'hidden';
         return;
     }
 
     toastElement.textContent = message;
-    toastElement.style.display = 'inline-block';
+    toastElement.style.visibility = 'visible';
 
     setTimeout(function () {
-        toastElement.style.display = 'none';
+        toastElement.style.visibility = 'hidden';
     }, seconds * 1000);
 }
 
@@ -42,7 +42,7 @@ function unhide(element, attribute) {
     if (attribute == 'mana-cost') {
         element = element.querySelector('.header');
     }
-    
+
     child = element.querySelector(`.${attribute}`);
 
     if (!child) {
@@ -117,7 +117,7 @@ function makeCardElement(card) {
 
     text = document.createElement('div');
     text.classList.add('text');
-   
+
     text.innerHTML = '';
 
     card.oracle_text.forEach(line => {
@@ -181,11 +181,15 @@ function processManaCosts(text) {
     return text;
 }
 
-for (let i = 0; i < 16; i++) {
+function newGame() {
+    addCost(-totalCost);
+    
     fetchWrapper(URL + '/random_card', {}, 'GET')
         .then(response => response.json())
         .then(data => {
-            grid.appendChild(makeCardElement(data));
+            data.forEach(card => {
+                grid.appendChild(makeCardElement(card));
+            });
         });
 }
 
@@ -222,4 +226,4 @@ document.addEventListener('keydown', handleKeyDown);
 
 rulesTextButton.click();
 
-addCost(0);
+newGame();

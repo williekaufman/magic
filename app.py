@@ -27,9 +27,13 @@ def new_game():
 
 @app.route("/random_card", methods=['GET'])
 def random_card():
-    name = request.args.get('name')
-    card = cards[name] if name else random.choice(list(cards.values()))
-    return card.to_dict()
+    ret = []
+    n = request.args.get('n', 4)
+    m = request.args.get('m', 4)
+    for _ in range(n):
+        for _ in range(m):
+            ret.append(random.choice(list(cards.values())).to_dict())
+    return ret
 
 real_types = [
     'Creature',
