@@ -11,7 +11,7 @@
 }
 
 .total-cost {
-  position: relative;
+  position: absolute;
   width: 300px;
   transform: translateX(-50%);
   text-align: center;
@@ -62,6 +62,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 9999;
 }
+
+
 
 .state-toast {
   display: none;

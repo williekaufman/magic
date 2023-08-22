@@ -7,26 +7,26 @@
     <title>Magic</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<div> <button id="newGameButton" class="new-game-button"> New Game </button>
+<button style="display: none;" id="newGameButton" class="new-game-button"> New Game </button>
+<div style="display: flex; flex-direction: row">     
+    <div class="toast" id="toast"> ASDF </div>
     <h2 class="total-cost" id="totalCost"> </h2>
 </div>
 <div class="cards-grid" id="cardsGrid"> </div>
-<div class="toast" id="toast"> ASDF </div>
-<div class="current-action" id="currentAction"> </div>
 <div class="clickables-container">
     <div class="purchase-grid" id="purchaseGrid">
         <span> Price </span>
         <span> Attribute </span>
-        <span class="price"> 4 </span>
-        <button id="rulesTextButton" class="attribute" data-attribute="text" data-cost="4"> Rules Text (r) </button>
-        <span class="price"> 4 </span>
-        <button id="typeButton" class="attribute" data-attribute="type" data-cost="4"> Type (t) </button>
+        <span class="price"> 3 </span>
+        <button id="rulesTextButton" class="attribute" data-attribute="text" data-cost="3"> Rules Text (r) </button>
+        <span class="price"> 3 </span>
+        <button id="manaCostButton" class="attribute" data-attribute="mana-cost" data-cost="3"> Mana Cost (m) </button>
         <span class="price"> 3 </span>
         <button id="ptButton" class="attribute" data-attribute="power-toughness" data-cost="3">Power/Toughness
             (p)</button>
-        <span class="price"> 3 </span>
-        <button id="manaCostButton" class="attribute" data-attribute="mana-cost" data-cost="3"> Mana Cost (m) </button>
-        <span class="price"> 2 </span>
+        <span class="type"> 2 </span>
+        <button id="typeButton" class="attribute" data-attribute="type" data-cost="2"> Type (t) </button>
+       <span class="price"> 2 </span>
         <button id="setButton" class="attribute" data-attribute="set" data-cost="2"> Set (s) </button>
         <span class="price"> 1 </span>
         <button id="rarityButton" class="attribute" data-attribute="rarity" data-cost="1"> Rarity (r) </button>

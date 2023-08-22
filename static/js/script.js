@@ -30,8 +30,6 @@ buttons = [
 
 function updateCurrentAction(action) {
     currentAction = action;
-    currentActionElement.textContent = `Current action: ${action}`;
-    currentActionElement.style.color = action == 'guessing' ? 'green' : 'red';
 }
 
 document.getElementById('newGameButton').addEventListener('click', event => {
@@ -40,7 +38,7 @@ document.getElementById('newGameButton').addEventListener('click', event => {
 
 buttons.forEach(button => {
     button.addEventListener('click', event => {
-        if (button.classList.contains('correct-guess')) {
+       if (button.classList.contains('correct-guess')) {
             showToast('Category is already done');
             return;
         }
@@ -49,6 +47,9 @@ buttons.forEach(button => {
         });
         button.classList.add('selected');
         category = button.getAttribute('data-category');
+        attributeElements.forEach(element => {
+            element.classList.remove('selected');
+        }); 
         updateCurrentAction('guessing');
     })
 });
@@ -122,6 +123,7 @@ function guess() {
 
         if (!buttons.find(button => !button.classList.contains('correct-guess'))) {
             gameOver = true;
+            unhideAll();
             totalCostElement.innerHTML = `Final score: ${100 - totalCost}`;
             totalCostElement.style.color = 'green';
             showToast(`You win! Final score: ${100 - totalCost}`, 10, 'green');
@@ -159,6 +161,24 @@ function showToast(message, seconds = 3, color = 'blue') {
     }, seconds * 1000);
 }
 
+attributes = [
+    'mana-cost',
+    'type',
+    'text',
+    'flavor-text',
+    'power-toughness',
+    'set',
+    'rarity',
+]
+
+function unhideAll() {
+    cards = document.querySelectorAll('.magic-card');
+    cards.forEach(card => {
+        attributes.forEach(attribute => {
+            unhide(card, attribute);
+        });
+    });
+}
 
 function unhide(element, attribute) {
     free = false;
@@ -403,6 +423,9 @@ attributeElements.forEach(element => {
         attributeElements.forEach(element => {
             element.classList.remove('selected');
         });
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+        });
         attribute = element.getAttribute('data-attribute');
         cost = element.getAttribute('data-cost');
         element.classList.add('selected');
@@ -423,7 +446,7 @@ function handleKeyDown(event) {
         ptButton.click();
     } else if (event.key == 's') {
         setButton.click();
-    } else if (event.key == 'r') {
+    } else if (event.key == 'a') {
         rarityButton.click();
     } else if (event.ctrlKey && event.key == 'Enter') {
         submitButton.click();
