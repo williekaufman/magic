@@ -10,7 +10,8 @@
 <h4 class="total-cost" id="totalCost"> </h4>
 <div class="cards-grid" id="cardsGrid"> </div>
 <div class="toast" id="toast"></div>
-<div class="purchase-grid" id="purchaseGrid">
+<div class="clickables-container">
+    <div class="purchase-grid" id="purchaseGrid">
         <span> Price </span>
         <span> Attribute </span>
         <span class="price"> 8 </span>
@@ -18,11 +19,20 @@
         <span class="price"> 4 </span>
         <button id="typeButton" class="attribute" data-attribute="type" data-cost="4"> Type (t) </button>
         <span class="price"> 3 </span>
-        <button id="ptButton" class="attribute" data-attribute="power-toughness" data-cost="3">Power/Toughness (p)</button>
+        <button id="ptButton" class="attribute" data-attribute="power-toughness" data-cost="3">Power/Toughness
+            (p)</button>
         <span class="price"> 3 </span>
         <button id="manaCostButton" class="attribute" data-attribute="mana-cost" data-cost="3"> Mana Cost (m) </button>
         <span class="price"> 1 </span>
-        <button id="flavorTextButton" class="attribute" data-attribute="flavor-text" data-cost="1"> Flavor Text (f) </button>
+        <button id="flavorTextButton" class="attribute" data-attribute="flavor-text" data-cost="1"> Flavor Text (f)
+        </button>
+    </div>
+    <div class="categories-grid" id="categoriesGrid">
+        <button id="button1" class="category" data-category="1"></button>
+        <button id="button2" class="category" data-category="2"></button>
+        <button id="button3" class="category" data-category="3"></button>
+        <button id="button4" class="category" data-category="4"></button>
+    </div>
 </div>
 
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>

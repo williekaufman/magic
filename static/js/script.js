@@ -5,8 +5,31 @@ totalCost = 0;
 
 toastElement = document.getElementById('toast');
 
+categoriesGridElement = document.getElementById('categoriesGrid');
+
 attribute = null;
 cost = null;
+category = null;
+
+answer = {}
+
+buttons = [
+    document.getElementById('button1'),
+    document.getElementById('button2'),
+    document.getElementById('button3'),
+    document.getElementById('button4'),
+]
+
+buttons.forEach(button => {
+    button.addEventListener('click', event => {
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+        });
+        button.classList.add('selected');
+        category = button.getAttribute('data-category');
+        console.log(category);
+    })
+});
 
 colors = {
     'W': 'white',
@@ -109,14 +132,14 @@ function makeCardElement(card) {
 
     type = document.createElement('div');
     type.classList.add('type');
-    type.innerHTML = card.type_line;
+    type.innerHTML = card.type;
 
     text = document.createElement('div');
     text.classList.add('text');
 
     text.innerHTML = '';
 
-    card.oracle_text.forEach(line => {
+    card.text.forEach(line => {
         text.innerHTML += `<span class="text-line">${processManaCosts(line)}</span>`;
     })
 
@@ -184,17 +207,53 @@ function processManaCosts(text) {
     return text;
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function processNewCategories(categories) {
+    for (var i = 0; i < categories.length; i++) {
+        buttons[i].innerHTML = categories[i];
+        buttons[i].setAttribute('data-category', categories[i]);
+    }
+};
+
+function processNewGameData(data) {
+    keys = Object.keys(data);
+    processNewCategories(keys);
+    cards = [];
+    keys.forEach(key => {
+        cards = cards.concat(data[key]);
+    });
+    shuffleArray(cards);
+    cards.forEach(card => {
+        grid.appendChild(makeCardElement(card));
+    });
+    answer = {}
+    keys.forEach(key => {
+        answer[key] = data[key].map(card => card.name);
+    });
+}
+
 function newGame() {
     addCost(-totalCost);
-    
-    fetchWrapper(URL + '/random_card', {}, 'GET')
+
+    fetchWrapper(URL + '/new_game', {}, 'GET')
         .then(response => response.json())
         .then(data => {
-            data.forEach(card => {
-                grid.appendChild(makeCardElement(card));
-            });
-        });
+            if (!data['success']) {
+                showToast('New game failed', 10);
+                return;
+            } else {
+                processNewGameData(data['data']);
+            }
+        }
+        );
 }
+
 
 attributeElements = document.querySelectorAll('.attribute');
 rulesTextButton = document.getElementById('rulesTextButton');

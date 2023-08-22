@@ -5,7 +5,7 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_cors import CORS, cross_origin
 from threading import Thread
 from secrets import compare_digest, token_hex
-from card import Card
+from card import Card, select_cards_outer 
 import time
 import random
 import json
@@ -23,7 +23,7 @@ def index():
 
 @app.route("/new_game", methods=['GET'])
 def new_game():
-    return {'success': True, 'game_id': new_game_id()}
+    return {'success': True, 'game_id': new_game_id(), 'data': select_cards_outer(list(cards.values()))}
 
 def get_random_card(name):
     if name:
@@ -31,16 +31,10 @@ def get_random_card(name):
     else:
         return random.choice(list(cards.values())).to_dict()
 
-@app.route("/random_card", methods=['GET'])
-def random_card():
+@app.route("/card", methods=['GET'])
+def card():
     name = request.args.get('name')
-    ret = []
-    n = request.args.get('n', 4)
-    m = request.args.get('m', 4)
-    for _ in range(n):
-        for _ in range(m):
-            ret.append(get_random_card(name))
-    return ret
+    return {'success': True, 'data': get_random_card(name)} 
 
 real_types = [
     'Creature',
@@ -63,7 +57,7 @@ def include_card(card):
                 break
             if t not in real_types:
                 return False
-        return card['legalities']['vintage'] == 'legal' and not card.get('card_faces')
+        return card['legalities']['vintage'] != 'not_legal' and not card.get('card_faces')
     except KeyError:
         return False
 
