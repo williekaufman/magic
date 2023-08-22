@@ -1,6 +1,7 @@
 import random
 from collections import Counter
 
+
 class Card():
     def __init__(self, d):
         self.mana_cost = d.get('mana_cost', '')
@@ -33,30 +34,41 @@ class Card():
             'cmc': self.cmc,
             'rarity': self.rarity,
         }
-    
+
+
 def has_cmc(n):
     return lambda c: c.cmc == n
+
 
 def is_type(t):
     return lambda c: t == c.type
 
+
 def is_subtype(t):
     return lambda c: t == c.subtype
+
 
 def has_power(p):
     return lambda c: c.power == p
 
+
 def has_toughness(t):
     return lambda c: c.toughness == t
+
 
 def has_set(s):
     return lambda c: c.set_name == s
 
+
 def has_rarity(r):
     return lambda c: c.rarity == r
 
+
 def is_color(color):
     return lambda c: c.colors == color
+
+
+pt_values = [x for x in range(10)] + ['*']
 
 all_rules = {
     'cmc': [
@@ -109,12 +121,8 @@ all_rules = {
             'Human Monk',
         ]
     ],
-    'power': [
-        has_power(str(p)) for p in range(15)
-    ],
-    'toughness': [
-        has_toughness(str(t)) for t in range(15)
-    ],
+    'power': [has_power(str(p)) for p in pt_values],
+    'toughness': [has_toughness(str(t)) for t in pt_values],
     'set': [
         has_set(s) for s in [
             'Core Set 2021',
@@ -138,7 +146,7 @@ all_rules = {
             'Limited Edition Alpha',
             'Limited Edition Beta',
             'Unlimited Edition',
-            ]
+        ]
     ],
     'rarity': [
         has_rarity(r) for r in [
@@ -146,7 +154,7 @@ all_rules = {
             'Uncommon',
             'Rare',
             'Mythic',
-        ] 
+        ]
     ],
     'colors': [
         is_color(c) for c in [
@@ -180,6 +188,7 @@ all_rules = {
     ]
 }
 
+
 def select_rules():
     ret = {}
     keys = random.sample(all_rules.keys(), 4)
@@ -187,8 +196,10 @@ def select_rules():
         ret[k] = random.choice(all_rules[k])
     return ret
 
+
 def filter_card(card, yes, no):
     return yes(card) and all(not rule(card) for rule in no)
+
 
 def select_n_cards(cards, n, yes, no):
     ret = []
@@ -200,6 +211,7 @@ def select_n_cards(cards, n, yes, no):
                 return ret
     return []
 
+
 def check_validity(answer):
     all_cards = []
     for cards in answer.values():
@@ -210,20 +222,24 @@ def check_validity(answer):
             return False
     return all(len(answer[k]) == 4 for k in answer.keys()) and len(answer.keys()) == 4
 
+
 def select_cards(cards):
     tmp = [c for c in cards]
     random.shuffle(tmp)
     rules = select_rules()
     ret = {}
     for k, v in rules.items():
-        ret[k] = select_n_cards(tmp, 4, v, [v2 for k2, v2 in rules.items() if k2 != k])
+        ret[k] = select_n_cards(
+            tmp, 4, v, [v2 for k2, v2 in rules.items() if k2 != k])
     return ret
+
 
 def combine_types(card):
     if card['subtype']:
         return f"{card['type']} - {card['subtype']}"
     else:
         return card['type']
+
 
 def select_cards_outer(cards):
     ret = {}
