@@ -8,12 +8,13 @@ class Card():
         self.type = d.get('type_line', '').split(' — ')[0].removesuffix(' ')
         self.subtype = d.get('type_line', '').split(' — ')[1].removeprefix(' ') if ' — ' in d.get('type_line', '') else ''
         self.text = d.get('oracle_text', '')
-        self.set = d.get('set_name', '')
+        self.set = d.get('set', '')
+        self.set_name = d.get('set_name', '')
         self.flavor_text = d.get('flavor_text', '')
         self.power = d.get('power', '')
         self.toughness = d.get('toughness', '')
         self.cmc = d.get('cmc', 0)
-        self.rarity = d.get('rarity', '')
+        self.rarity = d.get('rarity', '').capitalize()
 
     def to_dict(self):
         return {
@@ -22,7 +23,8 @@ class Card():
             'type': self.type,
             'subtype': self.subtype,
             'text': self.text.split('\n') if self.text else [],
-            'set': self.set,
+            'set': self.set.upper(),
+            'set_name': self.set_name,
             'flavor_text': self.flavor_text,
             'power': self.power,
             'toughness': self.toughness,
@@ -46,7 +48,7 @@ def has_toughness(t):
     return lambda c: c.toughness == t
 
 def has_set(s):
-    return lambda c: c.set == s
+    return lambda c: c.set_name == s
 
 def has_rarity(r):
     return lambda c: c.rarity == r
@@ -119,10 +121,10 @@ all_rules = {
     ],
     'rarity': [
         has_rarity(r) for r in [
-            'common',
-            'uncommon',
-            'rare',
-            'mythic',
+            'Common',
+            'Uncommon',
+            'Rare',
+            'Mythic',
         ] 
     ],
 }

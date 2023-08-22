@@ -248,6 +248,7 @@
 }
 
 .magic-card .type {
+  width: 60%;
   visibility: hidden;
   font-size: 14px;
   color: #555;
@@ -277,13 +278,15 @@
 
 .magic-card .set {
   visibility: hidden;
-  font-size: 12px;
+  font-size: 14px;
   color: #555;
 }
 
 .magic-card .rarity {
+  min-width: 25%;
+  text-align: end;
   visibility: hidden;
-  font-size: 12px;
+  font-size: 14px;
   color: #555;
 }
 

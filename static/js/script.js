@@ -261,11 +261,12 @@ function makeCardElement(card) {
 
     set = document.createElement('div');
     set.classList.add('set');
-    set.innerHTML = `Set: ${card.set}`;
+    set.title = card.set_name;
+    set.innerHTML = card.set;
 
     rarity = document.createElement('div');
     rarity.classList.add('rarity');
-    rarity.innerHTML = `Rarity: ${card.rarity}`;
+    rarity.innerHTML = card.rarity;
 
     typeLine = document.createElement('div');
     typeLine.classList.add('header');
