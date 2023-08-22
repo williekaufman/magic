@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <button style="display: none;" id="newGameButton" class="new-game-button"> New Game </button>
-<div style="display: flex; flex-direction: row">     
+<div style="display: flex; flex-direction: row">
     <div class="toast" id="toast"> ASDF </div>
     <h2 class="total-cost" id="totalCost"> </h2>
 </div>
@@ -17,20 +17,35 @@
     <div class="purchase-grid" id="purchaseGrid">
         <span> Price </span>
         <span> Attribute </span>
-        <span class="price"> 3 </span>
+        <div class="price">
+            <span class="centered-text"> 3 </span>
+        </div>
         <button id="rulesTextButton" class="attribute" data-attribute="text" data-cost="3"> Rules Text (r) </button>
-        <span class="price"> 3 </span>
+        <div class="price">
+            <span class="centered-text"> 3 </span>
+        </div>
         <button id="manaCostButton" class="attribute" data-attribute="mana-cost" data-cost="3"> Mana Cost (m) </button>
-        <span class="price"> 3 </span>
+        <div class="price">
+            <span class="centered-text"> 3 </span>
+        </div>
         <button id="ptButton" class="attribute" data-attribute="power-toughness" data-cost="3">Power/Toughness
             (p)</button>
-        <span class="price"> 2 </span>
+        <div class="price">
+            <span class="centered-text"> 2 </span>
+        </div>
         <button id="typeButton" class="attribute" data-attribute="type" data-cost="2"> Type (t) </button>
-       <span class="price"> 2 </span>
+
+        <div class="price">
+            <span class="centered-text"> 2 </span>
+        </div>
         <button id="setButton" class="attribute" data-attribute="set" data-cost="2"> Set (s) </button>
-        <span class="price"> 2 </span>
+        <div class="price">
+            <span class="centered-text"> 2 </span>
+        </div>
         <button id="rarityButton" class="attribute" data-attribute="rarity" data-cost="2"> Rarity (a) </button>
-        <span class="price"> 1 </span>
+        <div class="price">
+            <span class="centered-text"> 1 </span>
+        </div>
         <button id="flavorTextButton" class="attribute" data-attribute="flavor-text" data-cost="1"> Flavor Text (f)
         </button>
     </div>
@@ -40,7 +55,7 @@
         <button id="button3" class="category" data-category="3"></button>
         <button id="button4" class="category" data-category="4"></button>
     </div>
-    <div class="button-holder"> 
+    <div class="button-holder">
         <button class="submit-button" id="submitButton"> Submit Guess (Costs 5 if you're wrong) </button>
     </div>
 </div>

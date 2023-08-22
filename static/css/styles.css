@@ -16,7 +16,7 @@
   width: 300px;
   transform: translateX(-50%);
   text-align: center;
-  left: calc(min(100vw, 2000px) / 2);
+  left: calc(max(1000px, min(100vw, 2000px)) / 2);
 }
 
 .one-char-button {
@@ -312,7 +312,7 @@
 .purchase-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  min-width: 400px;
+  min-width: 300px;
   height: 300px;
   overflow: auto;
   padding: 20px;
@@ -333,6 +333,16 @@
   font-size: 18px;
   font-weight: bold;
   color: black;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.centered-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .categories-grid {
