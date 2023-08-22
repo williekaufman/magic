@@ -9,6 +9,7 @@ class Card():
         self.subtype = d.get('type_line', '').split(' — ')[1].removeprefix(' ') if ' — ' in d.get('type_line', '') else ''
         self.text = d.get('oracle_text', '')
         self.set = d.get('set', '')
+        self.colors = d.get('colors', [])
         self.set_name = d.get('set_name', '')
         self.flavor_text = d.get('flavor_text', '')
         self.power = d.get('power', '')
@@ -23,6 +24,7 @@ class Card():
             'type': self.type,
             'subtype': self.subtype,
             'text': self.text.split('\n') if self.text else [],
+            'colors': ''.join(self.colors),
             'set': self.set.upper(),
             'set_name': self.set_name,
             'flavor_text': self.flavor_text,
@@ -53,9 +55,12 @@ def has_set(s):
 def has_rarity(r):
     return lambda c: c.rarity == r
 
+def is_color(color):
+    return lambda c: c.colors == color
+
 all_rules = {
     'cmc': [
-        has_cmc(float(n)) for n in range(1, 8)
+        has_cmc(float(n)) for n in range(15)
     ],
     'type': [
         is_type(t) for t in [
@@ -78,6 +83,22 @@ all_rules = {
             'Warrior',
             'Vampire',
             'Zombie',
+            'Spirit',
+            'Angel',
+            'Demon',
+            'Dragon',
+            'Cat',
+            'Beast',
+            'Giant',
+            'Dwarf',
+            'Dinosaur',
+            'Merfolk',
+            'Merfolk Wizard',
+            'Bird',
+            'Elemental',
+            'Faerie',
+            'Goblin Warrior',
+            'Goblin Wizard',
             'Elf Warrior',
             'Human Wizard',
             'Human Warrior',
@@ -89,10 +110,10 @@ all_rules = {
         ]
     ],
     'power': [
-        has_power(str(p)) for p in range(1, 8)
+        has_power(str(p)) for p in range(15)
     ],
     'toughness': [
-        has_toughness(str(t)) for t in range(1, 8)
+        has_toughness(str(t)) for t in range(15)
     ],
     'set': [
         has_set(s) for s in [
@@ -127,6 +148,36 @@ all_rules = {
             'Mythic',
         ] 
     ],
+    'colors': [
+        is_color(c) for c in [
+            ['W'],
+            ['U'],
+            ['B'],
+            ['R'],
+            ['G'],
+            ['W', 'U'],
+            ['W', 'B'],
+            ['W', 'R'],
+            ['W', 'G'],
+            ['U', 'B'],
+            ['U', 'R'],
+            ['U', 'G'],
+            ['B', 'R'],
+            ['B', 'G'],
+            ['R', 'G'],
+            ['W', 'U', 'B'],
+            ['W', 'U', 'R'],
+            ['W', 'U', 'G'],
+            ['W', 'B', 'R'],
+            ['W', 'B', 'G'],
+            ['W', 'R', 'G'],
+            ['U', 'B', 'R'],
+            ['U', 'B', 'G'],
+            ['U', 'R', 'G'],
+            ['B', 'R', 'G'],
+            ['W', 'U', 'B', 'R', 'G'],
+        ]
+    ]
 }
 
 def select_rules():
