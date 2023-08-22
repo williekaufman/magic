@@ -4,6 +4,12 @@
   justify-content: space-between;
 }
 
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .total-cost {
   text-align: center;
 }
@@ -40,6 +46,7 @@
 
 .toast {
   visibility: hidden;
+  display: inline-block;
   padding: 10px;
   margin-top: 10px;
   background-color: blue;
@@ -149,6 +156,7 @@
   display: grid;
   grid-gap: 15px;
   grid-template-columns: repeat(4, 1fr);
+  max-width: 2000px;
 }
 
 .mana-symbol {
@@ -166,7 +174,7 @@
   text-align: center;
   background-color: lightgray;
   color: black;
-  transform: rotate(15deg);
+  transform: rotate(30deg);
 }
 
 .mana-symbol.generic {
@@ -197,6 +205,10 @@
 .mana-symbol.green {
   color: green;
   background-color: green;
+}
+
+.mana-symbol.phyrexian {
+  color: black;
 }
 
 .magic-card {
@@ -247,6 +259,8 @@
   visibility: hidden;
   font-style: italic;
   color: #777;
+  text-align: start;
+  align-self: flex-end;
 }
 
 .magic-card .image {
@@ -257,7 +271,7 @@
   visibility: hidden;
   font-size: 18px;
   font-weight: bold;
-  padding: 5px 10px;
+  padding: 10px;
   color: black;
   border-radius: 5px;
   border: 1px solid #000;

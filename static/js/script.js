@@ -9,13 +9,13 @@ attribute = null;
 cost = null;
 
 colors = {
-    '{W}': 'white',
-    '{U}': 'blue',
-    '{B}': 'black',
-    '{R}': 'red',
-    '{G}': 'green',
+    'W': 'white',
+    'U': 'blue',
+    'B': 'black',
+    'R': 'red',
+    'G': 'green',
     // This is sort of a lie but it's fine
-    '{C}': 'generic'
+    'C': 'generic'
 }
 
 function addCost(cost) {
@@ -56,10 +56,6 @@ function unhide(element, attribute) {
 
 
     child.style.visibility = 'visible';
-
-    if (attribute == 'type') {
-        unhide(element, 'power-toughness');
-    }
 
     return parseInt(cost);
 }
@@ -106,7 +102,7 @@ function makeCardElement(card) {
 
     manaCost = document.createElement('div');
     manaCost.classList.add('mana-cost');
-    manaCost.innerHTML = processManaCosts(card.mana_cost);
+    manaCost.innerHTML = card.mana_cost ? processManaCosts(card.mana_cost) : 'No mana cost';
 
     header.appendChild(title);
     header.appendChild(manaCost);
@@ -136,14 +132,16 @@ function makeCardElement(card) {
     cardElement.appendChild(type);
     cardElement.appendChild(text);
 
-    cardElement.appendChild(flavorText);
+    powerToughness = document.createElement('div');
+    powerToughness.classList.add('power-toughness');
+    powerToughness.innerHTML = card.power && card.toughness ? `${card.power}/${card.toughness}` : 'N/A';
 
-    if (card.power && card.toughness) {
-        powerToughness = document.createElement('div');
-        powerToughness.classList.add('power-toughness');
-        powerToughness.innerHTML = `${card.power}/${card.toughness}`;
-        cardElement.appendChild(powerToughness);
-    }
+    footer = document.createElement('div');
+    footer.classList.add('footer');
+    footer.appendChild(flavorText);
+    footer.appendChild(powerToughness);
+
+    cardElement.appendChild(footer);
 
     cardElement.addEventListener('click', event => {
         topmostElement = event.target;
@@ -159,7 +157,7 @@ function makeCardElement(card) {
 }
 
 genericManaPattern = /\{([0-9X]+)\}/g;
-
+phyrexianManaPattern = /\{([WUBRG])\/P\}/g;
 tapPattern = /\{T\}/g;
 
 function replaceGenericMana(match, capturedDigit) {
@@ -170,13 +168,18 @@ function replaceTapSymbol(match) {
     return '<div class="mana-symbol tap">T</div>';
 }
 
+function replacePhyrexianMana(match, capturedLetter) {
+    return `<div class="mana-symbol phyrexian ${colors[capturedLetter]}">&#934;</div>`;
+}
+
 // TODO: handle hybrid, energy, phyrexian, etc.
 function processManaCosts(text) {
     for (const [key, value] of Object.entries(colors)) {
-        text = text.replaceAll(key, `<div class="mana-symbol ${value}">${key.charAt(1)}</div>`);
+        text = text.replaceAll('{' + key + '}', `<div class="mana-symbol ${value}">${key}}</div>`);
     }
     text = text.replaceAll(genericManaPattern, replaceGenericMana);
     text = text.replaceAll(tapPattern, replaceTapSymbol);
+    text = text.replaceAll(phyrexianManaPattern, replacePhyrexianMana);
 
     return text;
 }
@@ -198,6 +201,7 @@ rulesTextButton = document.getElementById('rulesTextButton');
 typeButton = document.getElementById('typeButton');
 manaCostButton = document.getElementById('manaCostButton');
 flavorTextButton = document.getElementById('flavorTextButton');
+ptButton = document.getElementById('ptButton');
 
 attributeElements.forEach(element => {
     element.addEventListener('click', event => {
@@ -219,6 +223,8 @@ function handleKeyDown(event) {
         manaCostButton.click();
     } else if (event.key == 'f') {
         flavorTextButton.click();
+    } else if (event.key == 'p') {
+        ptButton.click();
     }
 }
 

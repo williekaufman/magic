@@ -25,14 +25,21 @@ def index():
 def new_game():
     return {'success': True, 'game_id': new_game_id()}
 
+def get_random_card(name):
+    if name:
+        return cards[name].to_dict()
+    else:
+        return random.choice(list(cards.values())).to_dict()
+
 @app.route("/random_card", methods=['GET'])
 def random_card():
+    name = request.args.get('name')
     ret = []
     n = request.args.get('n', 4)
     m = request.args.get('m', 4)
     for _ in range(n):
         for _ in range(m):
-            ret.append(random.choice(list(cards.values())).to_dict())
+            ret.append(get_random_card(name))
     return ret
 
 real_types = [
