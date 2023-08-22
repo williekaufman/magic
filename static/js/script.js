@@ -61,7 +61,9 @@ colors = {
     'R': 'red',
     'G': 'green',
     // This is sort of a lie but it's fine
-    'C': 'generic'
+    'C': 'generic',
+    // This is even more of a lie but whatever
+    'E': 'generic',
 }
 
 function titleOfCard(cardElement) {
