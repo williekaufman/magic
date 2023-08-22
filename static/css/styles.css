@@ -348,7 +348,7 @@
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  min-width: 400px;
+  min-width: 200px;
   height: 200px;
   overflow: auto;
   padding: 20px;
@@ -394,7 +394,6 @@
 .submit-button {
   align-self: center;
   height: 50px;
-  min-width: 280px;
   border-radius: 10px;
   border: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
