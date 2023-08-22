@@ -7,9 +7,11 @@
     <title>Magic</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<h4 class="total-cost" id="totalCost"> </h4>
+<div> <button id="newGameButton" class="new-game-button"> New Game </button>
+    <h2 class="total-cost" id="totalCost"> </h2>
+</div>
 <div class="cards-grid" id="cardsGrid"> </div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast"> ASDF </div>
 <div class="current-action" id="currentAction"> </div>
 <div class="clickables-container">
     <div class="purchase-grid" id="purchaseGrid">
@@ -34,7 +36,7 @@
         <button id="button3" class="category" data-category="3"></button>
         <button id="button4" class="category" data-category="4"></button>
     </div>
-    <button class="submit-button" id="submitButton"> Submit Guess </button>
+    <button class="submit-button" id="submitButton"> Submit Guess (Costs 5 if you're wrong) </button>
 </div>
 
 <script src="{{ url_for('static', filename='js/config.js') }}"></script>

@@ -11,7 +11,11 @@
 }
 
 .total-cost {
+  position: relative;
+  width: 300px;
+  transform: translateX(-50%);
   text-align: center;
+  left: calc(min(100vw, 2000px) / 2);
 }
 
 .one-char-button {
@@ -51,6 +55,7 @@
   display: inline-block;
   padding: 10px;
   margin-top: 10px;
+  margin-bottom: 10px;
   background-color: blue;
   color: #fff;
   border-radius: 5px;
@@ -340,7 +345,15 @@
 
 
 .part-of-guess {
+  background-color: lightblue;
+}
+
+.correct-guess {
   background-color: lightgreen;
+}
+
+.incorrect-guess {
+  background-color: lightpink;
 }
 
 .submit-button {

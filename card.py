@@ -27,12 +27,12 @@ class Card():
             'toughness': self.toughness,
             'cmc': self.cmc
         }
-
+    
 def has_cmc(n):
     return lambda c: c.cmc == n
 
 def is_type(t):
-    return lambda c: t == c.type + ' '
+    return lambda c: t == c.type
 
 def is_subtype(t):
     return lambda c: t == c.subtype
@@ -125,12 +125,19 @@ def select_cards(cards):
         ret[k] = select_n_cards(tmp, 4, v, [v2 for k2, v2 in rules.items() if k2 != k])
     return ret
 
+def combine_types(card):
+    if card['subtype']:
+        return f"{card['type']} - {card['subtype']}"
+    else:
+        return card['type']
+
 def select_cards_outer(cards):
     ret = {}
     i = 0
     while not check_validity(ret) and i < 1000:
-        # if i != 0:
-            # print('Invalid answer, retrying...')
         ret = select_cards(cards)
         i += 1
+    for k in ret.keys():
+        for c in ret[k]:
+            c['type'] = combine_types(c)
     return ret

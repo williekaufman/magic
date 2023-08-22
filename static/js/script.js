@@ -4,12 +4,13 @@ grid = document.getElementById('cardsGrid');
 totalCost = 0;
 
 toastElement = document.getElementById('toast');
-
-categoriesGridElement = document.getElementById('categoriesGrid');
+totalCostElement = document.getElementById('totalCost');
 
 attribute = null;
 cost = null;
 category = null;
+
+gameOver = false;
 
 currentGuess = [];
 
@@ -33,8 +34,16 @@ function updateCurrentAction(action) {
     currentActionElement.style.color = action == 'guessing' ? 'green' : 'red';
 }
 
+document.getElementById('newGameButton').addEventListener('click', event => {
+    newGame();
+});
+
 buttons.forEach(button => {
     button.addEventListener('click', event => {
+        if (button.classList.contains('correct-guess')) {
+            showToast('Category is already done');
+            return;
+        }
         buttons.forEach(button => {
             button.classList.remove('selected');
         });
@@ -59,6 +68,13 @@ function titleOfCard(cardElement) {
 }
 
 function toggleGuessing(card) {
+    if (card.classList.contains('correct-guess')) {
+        showToast('Card has already been used');
+        return;
+    } else if (card.classList.contains('incorrect-guess')) {
+        return;
+    }
+
     if (currentGuess.includes(card)) {
         currentGuess.splice(currentGuess.indexOf(card), 1);
         card.classList.remove('part-of-guess');
@@ -70,22 +86,47 @@ function toggleGuessing(card) {
 
 function guess() {
     if (currentGuess.length != 4) {
-        showToast('Guesses must be 4 cards');
+        showToast('Guesses must be 4 cards', 3, 'red');
+        console.log(currentGuess);
         return;
     }
+    if (buttons.find(button => button.classList.contains('selected')).classList.contains('correct-guess')) {
+        showToast('Category is already done', 3, 'red');
+        return;
+    }
+
     correctAnswer = answer[category];
     correct = true
     currentGuess.forEach(card => {
         if (!correctAnswer.includes(titleOfCard(card))) {
-            console.log(card);
             correct = false;
         }
     });
 
 
-    currentGuess.forEach(card => {
-        card.classList.remove('part-of-guess');
-    });
+    if (!correct) {
+        currentGuess.forEach(card => {
+            card.classList.remove('part-of-guess');
+            card.classList.add('incorrect-guess');
+            setTimeout(function () {
+                card.classList.remove('incorrect-guess');
+            }, 1000);
+        });
+        addCost(5);
+    } else {
+        buttons.find(button => button.classList.contains('selected')).classList.add('correct-guess');
+        currentGuess.forEach(card => {
+            card.classList.remove('part-of-guess');
+            card.classList.add('correct-guess');
+        });
+
+        if (!buttons.find(button => !button.classList.contains('correct-guess'))) {
+            gameOver = true;
+            totalCostElement.innerHTML = `Final score: ${100 - totalCost}`;
+            totalCostElement.style.color = 'green';
+            showToast(`You win! Final score: ${100 - totalCost}`, 10, 'green');
+        }
+    }
     currentGuess = [];
 }
 
@@ -94,11 +135,14 @@ submitButton.addEventListener('click', event => {
 });
 
 function addCost(cost) {
+    if (gameOver) {
+        return ;
+    }
     totalCost += cost;
-    document.getElementById('totalCost').innerHTML = `Points remaining: ${100 - totalCost}`;
+    totalCostElement.innerHTML = `Points remaining: ${100 - totalCost}`;
 }
 
-function showToast(message, seconds = 3) {
+function showToast(message, seconds = 3, color = 'blue') {
     if (seconds == 0) {
         toastElement.style.visibility = 'hidden';
         return;
@@ -107,8 +151,11 @@ function showToast(message, seconds = 3) {
     toastElement.textContent = message;
     toastElement.style.visibility = 'visible';
 
+    toastElement.style.backgroundColor = color;
+
     setTimeout(function () {
         toastElement.style.visibility = 'hidden';
+        toastElement.style.backgroundColor = 'blue';
     }, seconds * 1000);
 }
 
@@ -295,13 +342,25 @@ function processNewGameData(data) {
 }
 
 function newGame() {
+    gameOver = false;
+    currentGuess = [];
+
+    buttons.forEach(button => {
+        button.classList.remove('selected');
+        button.classList.remove('correct-guess');
+    });
+
+    totalCostElement.style.color = 'black';
+
     addCost(-totalCost);
+
+    grid.innerHTML = '';
 
     fetchWrapper(URL + '/new_game', {}, 'GET')
         .then(response => response.json())
         .then(data => {
             if (!data['success']) {
-                showToast('New game failed', 10);
+                showToast('New game failed', 10, 'red');
                 return;
             } else {
                 processNewGameData(data['data']);
@@ -341,6 +400,10 @@ function handleKeyDown(event) {
         flavorTextButton.click();
     } else if (event.key == 'p') {
         ptButton.click();
+    } else if (event.ctrlKey && event.key == 'Enter') {
+        submitButton.click();
+    } else if (event.ctrlKey && event.altKey && event.key == 'n') {
+        newGame();
     }
 }
 

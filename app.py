@@ -23,19 +23,25 @@ def index():
 
 @app.route("/new_game", methods=['GET'])
 def new_game():
-    print(len(cards.values()))
     return {'success': True, 'game_id': new_game_id(), 'data': select_cards_outer(list(cards.values()))}
 
-def get_random_card(name):
-    if name:
+def get_card(name):
+    try:
         return cards[name].to_dict()
-    else:
-        return random.choice(list(cards.values())).to_dict()
+    except KeyError:
+        for k in cards.keys():
+            if k.lower() == name.lower():
+                return cards[k].to_dict()
+    return None
 
 @app.route("/card", methods=['GET'])
 def card():
     name = request.args.get('name')
-    return {'success': True, 'data': get_random_card(name)} 
+    card = get_card(name)
+    if card:
+        return {'success': True, 'data': card}
+    else:
+        return {'success': False, 'message': 'Card not found'}
 
 real_types = [
     'Creature',
