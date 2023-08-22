@@ -270,8 +270,16 @@
   align-self: flex-end;
 }
 
-.magic-card .image {
-  height: auto;
+.magic-card .set {
+  visibility: hidden;
+  font-size: 12px;
+  color: #777;
+}
+
+.magic-card .rarity {
+  visibility: hidden;
+  font-size: 12px;
+  color: #777;
 }
 
 .magic-card .power-toughness {
@@ -295,7 +303,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 400px;
-  height: 200px;
+  height: 300px;
   overflow: auto;
   padding: 20px;
   grid-gap: 5px;
@@ -328,7 +336,6 @@
   border-radius: 10px;
   background-color: lightseagreen;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  align-self: center;
   text-align: center; 
   grid-template-columns: repeat(2, 1fr);
 }
@@ -342,7 +349,6 @@
   font-size: 30px;
   font-weight: bold;
 }
-
 
 .part-of-guess {
   background-color: lightblue;

@@ -13,6 +13,7 @@ class Card():
         self.power = d.get('power', '')
         self.toughness = d.get('toughness', '')
         self.cmc = d.get('cmc', 0)
+        self.rarity = d.get('rarity', '')
 
     def to_dict(self):
         return {
@@ -25,7 +26,8 @@ class Card():
             'flavor_text': self.flavor_text,
             'power': self.power,
             'toughness': self.toughness,
-            'cmc': self.cmc
+            'cmc': self.cmc,
+            'rarity': self.rarity,
         }
     
 def has_cmc(n):
@@ -42,6 +44,12 @@ def has_power(p):
 
 def has_toughness(t):
     return lambda c: c.toughness == t
+
+def has_set(s):
+    return lambda c: c.set == s
+
+def has_rarity(r):
+    return lambda c: c.rarity == r
 
 all_rules = {
     'cmc': [
@@ -83,6 +91,39 @@ all_rules = {
     ],
     'toughness': [
         has_toughness(str(t)) for t in range(1, 8)
+    ],
+    'set': [
+        has_set(s) for s in [
+            'Core Set 2021',
+            'Throne of Eldraine',
+            'Ikoria: Lair of Behemoths',
+            'Zendikar Rising',
+            'Kaldheim',
+            'Strixhaven: School of Mages',
+            'Adventures in the Forgotten Realms',
+            'Innistrad: Midnight Hunt',
+            'Innistrad: Crimson Vow',
+            'Time Spiral Remastered',
+            'Modern Horizons 2',
+            'Core Set 2022',
+            'Core Set 2020',
+            'Core Set 2019',
+            'Core Set 2018',
+            'Core Set 2017',
+            'Core Set 2016',
+            'Core Set 2015',
+            'Limited Edition Alpha',
+            'Limited Edition Beta',
+            'Unlimited Edition',
+            ]
+    ],
+    'rarity': [
+        has_rarity(r) for r in [
+            'common',
+            'uncommon',
+            'rare',
+            'mythic',
+        ] 
     ],
 }
 

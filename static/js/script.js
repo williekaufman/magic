@@ -161,6 +161,11 @@ function showToast(message, seconds = 3, color = 'blue') {
 
 
 function unhide(element, attribute) {
+    free = false;
+    if (element.classList.contains('correct-guess')) {
+        free = true;
+    }
+    
     if (attribute == 'mana-cost') {
         element = element.querySelector('.header');
     }
@@ -176,10 +181,9 @@ function unhide(element, attribute) {
         return 0;
     };
 
-
     child.style.visibility = 'visible';
 
-    return parseInt(cost);
+    return free ? 0 : parseInt(cost);
 }
 
 function makeRequestOptions(body, method = 'POST') {
@@ -253,6 +257,21 @@ function makeCardElement(card) {
     cardElement.appendChild(header);
     cardElement.appendChild(type);
     cardElement.appendChild(text);
+
+    set = document.createElement('div');
+    set.classList.add('set');
+    set.innerHTML = `Set: ${card.set}`;
+
+    rarity = document.createElement('div');
+    rarity.classList.add('rarity');
+    rarity.innerHTML = `Rarity: ${card.rarity}`;
+
+    setAndRarity = document.createElement('div');
+    setAndRarity.classList.add('footer');
+    setAndRarity.appendChild(set);
+    setAndRarity.appendChild(rarity);
+
+    cardElement.appendChild(setAndRarity);
 
     powerToughness = document.createElement('div');
     powerToughness.classList.add('power-toughness');
@@ -376,6 +395,8 @@ typeButton = document.getElementById('typeButton');
 manaCostButton = document.getElementById('manaCostButton');
 flavorTextButton = document.getElementById('flavorTextButton');
 ptButton = document.getElementById('ptButton');
+setButton = document.getElementById('setButton');
+rarityButton = document.getElementById('rarityButton');
 
 attributeElements.forEach(element => {
     element.addEventListener('click', event => {
@@ -400,6 +421,10 @@ function handleKeyDown(event) {
         flavorTextButton.click();
     } else if (event.key == 'p') {
         ptButton.click();
+    } else if (event.key == 's') {
+        setButton.click();
+    } else if (event.key == 'r') {
+        rarityButton.click();
     } else if (event.ctrlKey && event.key == 'Enter') {
         submitButton.click();
     } else if (event.ctrlKey && event.altKey && event.key == 'n') {
