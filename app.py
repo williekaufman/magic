@@ -72,4 +72,4 @@ if __name__ == "__main__":
     with open('cards.json') as f:
         cards = json.load(f)
     cards = {card['name']: Card(card) for card in cards if include_card(card)}
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5005)
