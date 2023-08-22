@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 
+# TODO:
+# Handle more mana symbols
+# Some kind of spec
+# More card properties
+
 from flask import Flask, jsonify, request, make_response, render_template
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_cors import CORS, cross_origin

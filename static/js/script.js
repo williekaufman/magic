@@ -407,6 +407,8 @@ function newGame() {
             }
         }
         );
+
+    showToast('', 0);
 }
 
 
