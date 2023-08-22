@@ -5,6 +5,7 @@
 }
 
 .footer {
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -177,6 +178,7 @@
   text-align: center;
   justify-content: center;
   display: inline-block;
+  color: white;
 }
 
 .mana-symbol.tap {
@@ -192,7 +194,7 @@
 }
 
 .mana-symbol.white {
-  color: lightgoldenrodyellow;
+  color: white;
   background-color: white;
 }
 
@@ -223,7 +225,7 @@
 .magic-card {
   border: 1px solid #000;
   border-radius: 8px;
-  background-color: yellow;
+  background-color: lightpink;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
@@ -361,7 +363,7 @@
 }
 
 .incorrect-guess {
-  background-color: lightpink;
+  background-color: red;
 }
 
 .submit-button {
@@ -371,5 +373,5 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   margin-left: 20px;
-  background-color: pink;
+  background-color: lightblue;
 }

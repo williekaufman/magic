@@ -178,6 +178,7 @@ function unhideAll() {
             unhide(card, attribute);
         });
     });
+    showToast('', 0);
 }
 
 function unhide(element, attribute) {
@@ -340,7 +341,7 @@ function replacePhyrexianMana(match, capturedLetter) {
 // TODO: handle hybrid, energy, phyrexian, etc.
 function processManaCosts(text) {
     for (const [key, value] of Object.entries(colors)) {
-        text = text.replaceAll('{' + key + '}', `<div class="mana-symbol ${value}">${key}}</div>`);
+        text = text.replaceAll('{' + key + '}', `<div class="mana-symbol ${value}">${key}</div>`);
     }
     text = text.replaceAll(genericManaPattern, replaceGenericMana);
     text = text.replaceAll(tapPattern, replaceTapSymbol);
