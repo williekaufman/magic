@@ -23,6 +23,7 @@ def index():
 
 @app.route("/new_game", methods=['GET'])
 def new_game():
+    print(len(cards.values()))
     return {'success': True, 'game_id': new_game_id(), 'data': select_cards_outer(list(cards.values()))}
 
 def get_random_card(name):

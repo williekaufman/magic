@@ -11,6 +11,13 @@ attribute = null;
 cost = null;
 category = null;
 
+currentGuess = [];
+
+currentActionElement = document.getElementById('currentAction');
+currentAction = null;
+
+submitButton = document.getElementById('submitButton');
+
 answer = {}
 
 buttons = [
@@ -20,6 +27,12 @@ buttons = [
     document.getElementById('button4'),
 ]
 
+function updateCurrentAction(action) {
+    currentAction = action;
+    currentActionElement.textContent = `Current action: ${action}`;
+    currentActionElement.style.color = action == 'guessing' ? 'green' : 'red';
+}
+
 buttons.forEach(button => {
     button.addEventListener('click', event => {
         buttons.forEach(button => {
@@ -27,7 +40,7 @@ buttons.forEach(button => {
         });
         button.classList.add('selected');
         category = button.getAttribute('data-category');
-        console.log(category);
+        updateCurrentAction('guessing');
     })
 });
 
@@ -40,6 +53,45 @@ colors = {
     // This is sort of a lie but it's fine
     'C': 'generic'
 }
+
+function titleOfCard(cardElement) {
+    return cardElement.querySelector('.header').querySelector('.title').textContent;
+}
+
+function toggleGuessing(card) {
+    if (currentGuess.includes(card)) {
+        currentGuess.splice(currentGuess.indexOf(card), 1);
+        card.classList.remove('part-of-guess');
+    } else {
+        currentGuess.push(card);
+        card.classList.add('part-of-guess');
+    }
+}
+
+function guess() {
+    if (currentGuess.length != 4) {
+        showToast('Guesses must be 4 cards');
+        return;
+    }
+    correctAnswer = answer[category];
+    correct = true
+    currentGuess.forEach(card => {
+        if (!correctAnswer.includes(titleOfCard(card))) {
+            console.log(card);
+            correct = false;
+        }
+    });
+
+
+    currentGuess.forEach(card => {
+        card.classList.remove('part-of-guess');
+    });
+    currentGuess = [];
+}
+
+submitButton.addEventListener('click', event => {
+    guess();
+});
 
 function addCost(cost) {
     totalCost += cost;
@@ -173,7 +225,11 @@ function makeCardElement(card) {
             topmostElement = topmostElement.parentElement;
         }
 
-        addCost(unhide(topmostElement, attribute));
+        if (currentAction == 'guessing') {
+            toggleGuessing(topmostElement);
+        } else {
+            addCost(unhide(topmostElement, attribute));
+        }
     });
 
     return cardElement;
@@ -270,6 +326,7 @@ attributeElements.forEach(element => {
         attribute = element.getAttribute('data-attribute');
         cost = element.getAttribute('data-cost');
         element.classList.add('selected');
+        updateCurrentAction('buying');
     });
 });
 

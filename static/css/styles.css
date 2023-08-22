@@ -37,7 +37,9 @@
 
 .selected {
   font-weight: bold;
+  background-color: lightblue;
 }
+
 
 .container {
   display: flex;
@@ -329,4 +331,24 @@
 .category {
   min-height: 25px;
   font-size: 24px;
+}
+
+.current-action {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+.part-of-guess {
+  background-color: lightgreen;
+}
+
+.submit-button {
+  height: 50px;
+  border-radius: 10px;
+  border: 0px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-left: 20px;
+  background-color: pink;
 }

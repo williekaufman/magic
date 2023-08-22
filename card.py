@@ -5,7 +5,8 @@ class Card():
     def __init__(self, d):
         self.mana_cost = d.get('mana_cost', '')
         self.name = d.get('name', '')
-        self.type = d.get('type_line', '')
+        self.type = d.get('type_line', '').split(' — ')[0].removesuffix(' ')
+        self.subtype = d.get('type_line', '').split(' — ')[1].removeprefix(' ') if ' — ' in d.get('type_line', '') else ''
         self.text = d.get('oracle_text', '')
         self.set = d.get('set_name', '')
         self.flavor_text = d.get('flavor_text', '')
@@ -18,6 +19,7 @@ class Card():
             'mana_cost': self.mana_cost,
             'name': self.name,
             'type': self.type,
+            'subtype': self.subtype,
             'text': self.text.split('\n') if self.text else [],
             'set': self.set,
             'flavor_text': self.flavor_text,
@@ -29,8 +31,11 @@ class Card():
 def has_cmc(n):
     return lambda c: c.cmc == n
 
-def has_type(t):
-    return lambda c: t in c.type
+def is_type(t):
+    return lambda c: t == c.type + ' '
+
+def is_subtype(t):
+    return lambda c: t == c.subtype
 
 def has_power(p):
     return lambda c: c.power == p
@@ -43,7 +48,7 @@ all_rules = {
         has_cmc(float(n)) for n in range(1, 8)
     ],
     'type': [
-        has_type(t) for t in [
+        is_type(t) for t in [
             'Artifact',
             'Enchantment',
             'Planeswalker',
@@ -52,6 +57,25 @@ all_rules = {
             'Land',
             'Legendary',
             'Tribal',
+        ]
+    ],
+    'subtype': [
+        is_subtype(t) for t in [
+            'Human',
+            'Elf',
+            'Goblin',
+            'Wizard',
+            'Warrior',
+            'Vampire',
+            'Zombie',
+            'Elf Warrior',
+            'Human Wizard',
+            'Human Warrior',
+            'Human Cleric',
+            'Human Soldier',
+            'Human Shaman',
+            'Human Rogue',
+            'Human Monk',
         ]
     ],
     'power': [
@@ -72,28 +96,28 @@ def select_rules():
 def filter_card(card, yes, no):
     return yes(card) and all(not rule(card) for rule in no)
 
-def x(cards):
-    return cards.pop()
-
 def select_n_cards(cards, n, yes, no):
     ret = []
     while cards:
-        card = x(cards)
+        card = cards.pop()
         if filter_card(card, yes, no):
             ret.append(card.to_dict())
             if len(ret) == n:
                 return ret
-    return None
+    return []
 
 def check_validity(answer):
+    all_cards = []
+    for cards in answer.values():
+        all_cards += cards or []
     for k in answer.keys():
-        c = Counter(card[k] for card in answer[k])
+        c = Counter(card[k] for card in all_cards)
         if len([v for v in c.values() if v == 4]) != 1:
             return False
     return all(len(answer[k]) == 4 for k in answer.keys()) and len(answer.keys()) == 4
 
 def select_cards(cards):
-    tmp = cards
+    tmp = [c for c in cards]
     random.shuffle(tmp)
     rules = select_rules()
     ret = {}
@@ -105,6 +129,8 @@ def select_cards_outer(cards):
     ret = {}
     i = 0
     while not check_validity(ret) and i < 1000:
+        # if i != 0:
+            # print('Invalid answer, retrying...')
         ret = select_cards(cards)
         i += 1
     return ret
