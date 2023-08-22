@@ -452,6 +452,8 @@ function handleKeyDown(event) {
         submitButton.click();
     } else if (event.ctrlKey && event.altKey && event.key == 'n') {
         newGame();
+    } else if (event.ctrlKey && event.altKey && event.key == 'u') {
+        unhideAll();
     }
 }
 
