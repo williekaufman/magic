@@ -250,7 +250,7 @@
 .magic-card .type {
   visibility: hidden;
   font-size: 14px;
-  color: #777;
+  color: #555;
 }
 
 .magic-card .text {
@@ -270,7 +270,7 @@
   visibility: hidden;
   font-style: italic;
   font-size: 13px; 
-  color: #777;
+  color: black;
   text-align: start;
   align-self: flex-end;
 }
@@ -278,13 +278,13 @@
 .magic-card .set {
   visibility: hidden;
   font-size: 12px;
-  color: #777;
+  color: #555;
 }
 
 .magic-card .rarity {
   visibility: hidden;
   font-size: 12px;
-  color: #777;
+  color: #555;
 }
 
 .magic-card .power-toughness {
@@ -368,12 +368,20 @@
   background-color: red;
 }
 
+.button-holder {
+  height: 50px;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: lightseagreen;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
 .submit-button {
+  align-self: center;
   height: 50px;
   border-radius: 10px;
   border: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  margin-left: 20px;
-  background-color: lightblue;
 }

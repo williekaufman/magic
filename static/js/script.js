@@ -91,7 +91,8 @@ function guess() {
         console.log(currentGuess);
         return;
     }
-    if (buttons.find(button => button.classList.contains('selected')).classList.contains('correct-guess')) {
+    currentButton = buttons.find(button => button.classList.contains('selected'));
+    if (currentButton && currentButton.classList.contains('correct-guess')) {
         showToast('Category is already done', 3, 'red');
         return;
     }
@@ -258,6 +259,21 @@ function makeCardElement(card) {
     type.classList.add('type');
     type.innerHTML = card.type;
 
+    set = document.createElement('div');
+    set.classList.add('set');
+    set.innerHTML = `Set: ${card.set}`;
+
+    rarity = document.createElement('div');
+    rarity.classList.add('rarity');
+    rarity.innerHTML = `Rarity: ${card.rarity}`;
+
+    typeLine = document.createElement('div');
+    typeLine.classList.add('header');
+
+    typeLine.appendChild(type);
+    typeLine.appendChild(set);
+    typeLine.appendChild(rarity);
+
     text = document.createElement('div');
     text.classList.add('text');
 
@@ -276,23 +292,8 @@ function makeCardElement(card) {
     flavorText.innerHTML = card.flavor_text || 'This card has no flavor text. Sorry!';
 
     cardElement.appendChild(header);
-    cardElement.appendChild(type);
+    cardElement.appendChild(typeLine);
     cardElement.appendChild(text);
-
-    set = document.createElement('div');
-    set.classList.add('set');
-    set.innerHTML = `Set: ${card.set}`;
-
-    rarity = document.createElement('div');
-    rarity.classList.add('rarity');
-    rarity.innerHTML = `Rarity: ${card.rarity}`;
-
-    setAndRarity = document.createElement('div');
-    setAndRarity.classList.add('footer');
-    setAndRarity.appendChild(set);
-    setAndRarity.appendChild(rarity);
-
-    cardElement.appendChild(setAndRarity);
 
     powerToughness = document.createElement('div');
     powerToughness.classList.add('power-toughness');
