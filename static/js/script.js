@@ -327,6 +327,7 @@ function makeCardElement(card) {
 genericManaPattern = /\{([0-9X]+)\}/g;
 phyrexianManaPattern = /\{([WUBRG])\/P\}/g;
 tapPattern = /\{T\}/g;
+hybridManaPattern = /\{([WUBRG])\/([WUBRG])\}/g;
 
 function replaceGenericMana(match, capturedDigit) {
     return `<div class="mana-symbol generic">${capturedDigit}</div>`;
@@ -340,7 +341,11 @@ function replacePhyrexianMana(match, capturedLetter) {
     return `<div class="mana-symbol phyrexian ${colors[capturedLetter]}">&#934;</div>`;
 }
 
-// TODO: handle hybrid, energy, phyrexian, etc.
+function replaceHybridMana(match, color1, color2) {
+    return `<div class="mana-symbol hybrid" style="background: linear-gradient(135deg, ${colors[color1]} 50%, ${colors[color2]} 50%)"></div>`;
+}
+
+// TODO: handle energy, etc.
 function processManaCosts(text) {
     for (const [key, value] of Object.entries(colors)) {
         text = text.replaceAll('{' + key + '}', `<div class="mana-symbol ${value}">${key}</div>`);
@@ -348,7 +353,8 @@ function processManaCosts(text) {
     text = text.replaceAll(genericManaPattern, replaceGenericMana);
     text = text.replaceAll(tapPattern, replaceTapSymbol);
     text = text.replaceAll(phyrexianManaPattern, replacePhyrexianMana);
-
+    text = text.replaceAll(hybridManaPattern, replaceHybridMana);
+    
     return text;
 }
 
