@@ -43,6 +43,8 @@
 .selected {
   font-weight: bold;
   background-color: lightblue;
+  box-sizing: border-box;
+  letter-spacing: -0.02em;
 }
 
 
