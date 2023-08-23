@@ -348,9 +348,8 @@
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  min-width: 275px;
+  min-width: 300px;
   height: 200px;
-  overflow: auto;
   padding: 20px;
   grid-gap: 5px;
   border-radius: 10px;
