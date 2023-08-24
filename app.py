@@ -10,7 +10,7 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_cors import CORS, cross_origin
 from threading import Thread
 from secrets import compare_digest, token_hex
-from card import Card, select_cards_outer 
+from card import Card, select_cards_outer
 import time
 import random
 import json

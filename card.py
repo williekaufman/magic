@@ -78,12 +78,13 @@ all_rules = {
         is_type(t) for t in [
             'Artifact',
             'Enchantment',
-            'Planeswalker',
+            'Legendary Planeswalker',
             'Instant',
             'Sorcery',
             'Land',
-            'Legendary',
-            'Tribal',
+            'Creature',
+            'Legendary Creature',
+            'Artifact Creature',
         ]
     ],
     'subtype': [

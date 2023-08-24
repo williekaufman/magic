@@ -90,10 +90,13 @@ function toggleGuessing(card) {
 function guess() {
     if (currentGuess.length != 4) {
         showToast('Guesses must be 4 cards', 3, 'red');
-        console.log(currentGuess);
         return;
     }
     currentButton = buttons.find(button => button.classList.contains('selected'));
+    if (!currentButton) {
+        showToast('No category selected', 3, 'red');
+        return;
+    }
     if (currentButton && currentButton.classList.contains('correct-guess')) {
         showToast('Category is already done', 3, 'red');
         return;
