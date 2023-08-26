@@ -10,7 +10,7 @@ from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_cors import CORS, cross_origin
 from threading import Thread
 from secrets import compare_digest, token_hex
-from card import Card, select_cards_outer
+from card import Card, select_cards_outer, check_rules
 import time
 import random
 import json
@@ -77,4 +77,5 @@ if __name__ == "__main__":
     with open('cards.json') as f:
         cards = json.load(f)
     cards = {card['name']: Card(card) for card in cards if include_card(card)}
+    check_rules(cards)
     app.run(host='0.0.0.0', port=5005)

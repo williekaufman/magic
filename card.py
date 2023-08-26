@@ -86,6 +86,7 @@ all_rules = {
             'Land',
             'Creature',
             'Artifact Creature',
+            'Enchantment Creature',
         ]
     ],
     'subtype': [
@@ -103,8 +104,23 @@ all_rules = {
             'Dragon',
             'Fish',
             'Aura',
+            'Aura',
+            'Aura',
+            'Aura',
+            'Aura',
+            'Aura',
+            'Equipment',
+            'Equipment',
+            'Equipment',
+            'Equipment',
+            'Equipment',
             'Equipment',
             'Arcane',
+            'Arcane',
+            'Arcane',
+            'Cleric',
+            'Lhurgoyf',
+            'Orc',
             'Illusion',
             'Cat',
             'Beast',
@@ -143,7 +159,7 @@ all_rules = {
             'Throne of Eldraine',
             'Core Set 2020',
             'Zendikar Rising',
-            'War of th Spark',
+            'War of the Spark',
             'Kaladesh',
             'Shadowmoor',
             'Ixalan',
@@ -265,3 +281,9 @@ def select_cards_outer(cards):
         for c in ret[k]:
             c['type'] = combine_types(c)
     return ret
+
+def check_rules(cards):
+    for rule in all_rules.values():
+        for f in rule:
+            if not [c for c in cards.values() if f(c)]:
+                print(f'No cards for {f}')
