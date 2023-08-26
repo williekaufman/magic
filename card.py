@@ -1,6 +1,8 @@
 import random
 from collections import Counter
 
+def sort_colors(colors):
+    return sorted(colors, key=lambda c: ['W', 'U', 'B', 'R', 'G'].index(c))
 
 class Card():
     def __init__(self, d):
@@ -10,7 +12,7 @@ class Card():
         self.subtype = d.get('type_line', '').split(' — ')[1].removeprefix(' ') if ' — ' in d.get('type_line', '') else ''
         self.text = d.get('oracle_text', '')
         self.set = d.get('set', '')
-        self.colors = d.get('colors', [])
+        self.colors = sort_colors(d.get('colors', []))
         self.set_name = d.get('set_name', '')
         self.flavor_text = d.get('flavor_text', '')
         self.power = d.get('power', '')
@@ -83,7 +85,6 @@ all_rules = {
             'Sorcery',
             'Land',
             'Creature',
-            'Legendary Creature',
             'Artifact Creature',
         ]
     ],
@@ -100,6 +101,11 @@ all_rules = {
             'Angel',
             'Demon',
             'Dragon',
+            'Fish',
+            'Aura',
+            'Equipment',
+            'Arcane',
+            'Illusion',
             'Cat',
             'Beast',
             'Giant',
@@ -120,33 +126,40 @@ all_rules = {
             'Human Shaman',
             'Human Rogue',
             'Human Monk',
+            'Human Druid',
+            'Human Soldier',   
         ]
     ],
     'power': [has_power(str(p)) for p in pt_values],
     'toughness': [has_toughness(str(t)) for t in pt_values],
     'set': [
         has_set(s) for s in [
+            'The Brothers\' War',
+            'Dominaria',
+            'Dominaria United',
+            'March of the Machine',
+            'Theros Beyond Death',
             'Core Set 2021',
             'Throne of Eldraine',
-            'Ikoria: Lair of Behemoths',
-            'Zendikar Rising',
-            'Kaldheim',
-            'Strixhaven: School of Mages',
-            'Adventures in the Forgotten Realms',
-            'Innistrad: Midnight Hunt',
-            'Innistrad: Crimson Vow',
-            'Time Spiral Remastered',
-            'Modern Horizons 2',
-            'Core Set 2022',
             'Core Set 2020',
-            'Core Set 2019',
-            'Core Set 2018',
-            'Core Set 2017',
-            'Core Set 2016',
-            'Core Set 2015',
-            'Limited Edition Alpha',
-            'Limited Edition Beta',
-            'Unlimited Edition',
+            'Zendikar Rising',
+            'War of th Spark',
+            'Kaladesh',
+            'Shadowmoor',
+            'Ixalan',
+            'Guilds of Ravnica',
+            'Shadows over Innistrad',
+            'Amonkhet',
+            'Mirrodin',
+            'Khans of Tarkir',
+            'Innistrad',
+            'Lorwyn',
+            'Return to Ravnica',
+            'Magic Origins',
+            'Theros',
+            'Scars of Mirrodin',
+            'Shards of Alara',
+            'New Phyrexia'
         ]
     ],
     'rarity': [
