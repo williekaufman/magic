@@ -127,12 +127,25 @@ function guess() {
             card.classList.add('correct-guess');
         });
 
-        if (!buttons.find(button => !button.classList.contains('correct-guess'))) {
+        incompleteCategories = buttons.filter(button => !button.classList.contains('correct-guess'));
+
+        if (incompleteCategories.length == 1) {
+            currentGuess = Array.from(grid.children).filter(card => !card.classList.contains('correct-guess'));
+            currentGuess.forEach(card => {
+                card.classList.add('correct-guess');
+            });
+            incompleteCategories[0].classList.add('correct-guess');
+            buttons.filter(button => button.classList.contains('selected')).forEach(button => {
+                button.classList.remove('selected');
+            });
+            category = null;
+        }
+
+        if (incompleteCategories.length <= 1) {
             gameOver = true;
             unhideAll();
             totalCostElement.innerHTML = `Final score: ${100 - totalCost}`;
             totalCostElement.style.color = 'green';
-            showToast(`You win! Final score: ${100 - totalCost}`, 10, 'green');
         }
     }
     currentGuess = [];
