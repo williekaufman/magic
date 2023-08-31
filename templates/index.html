@@ -61,7 +61,7 @@
 <div id="rulesModalOverlay" class="modal-overlay">
     <div id="rulesModal" class="rules-modal">
         <h1>How to play</h1>
-        <p> Your goal is to categorize the cards into the four categories displayed in a 2x2 grid at the bottom. In doing so, there are two fundamental actions you can take: guessing and buying. </p>
+        <p> Your goal is to categorize the cards based on the four categories displayed in a 2x2 grid at the bottom. In doing so, there are two fundamental actions you can take: guessing and buying. </p>
         <p> Your score is displayed at the top. Once you've got the hang of it, I recommend playing with a timer. </p>
 
         <h2>Buying</h2>
@@ -69,14 +69,15 @@
 
         <h2>Guessing</h2>
         <p> A guess is a set of 4 cards and a property that you think they share. To guess, click on the property you want to guess, and then the 4 cards you want to guess on. You can remove cards from a guess by selecting any property and then clicking on them. The blue background means 'is part of a guess'. To submit a guess, click the submit button. </p> 
+        <p> A guess is correct if all 4 cards share the property you guessed on <b> and no other cards share that property </b>. For example, picking 4 creatures with a power of 2 is only correct if no other cards have a power of 2. </p>
         <p> Guessing incorrectly costs you 5 points. Guessing correctly is free. </p>
 
         <h2>Clarifications/Miscellanea</h2>
         <p> You are always in guessing or buying mode. Make sure you're in the right one before you click on a card! </p>
-        <p> In all cases, the properties are an exact match. For example, for cards to match on type, they would all have to be a Tribal Sorcery, or a Legendary Artifact Creature. Submitting three artifact creatures and a legendary artifact creature will never be correct. Similarly, a 0 power creature and a * power creature are different. But a land and a 0 drop have the same CMC, since those are both exactly 0. </p>
-        <p> There are exactly 4 cards that match on each property. For example, if there are 5 commons, it will never be correct to submit a subset of 4 of them for 'type'. </p>
+        <p> In all cases, the properties are an exact match. For example, for cards to match on type, they would all have to be a Tribal Sorcery, or a Legendary Artifact Creature. <b> Submitting three artifact creatures and a legendary artifact creature will never be correct </b>. Similarly, a 0 power creature and a * power creature are different. But a land and a 0 drop have the same CMC, since those are both exactly 0. </p>
+        <p> There are exactly 4 cards that match on each property. For example, if there are 5 commons, it will never be correct to submit a subset of 4 of them for 'rarity'. </p>
         <p> If you buy 'type', you get the full type line. </p>
-        <p> The cards are all 'real', normal cards, so things like schemes or tokens are not included. </p>
+        <p> The cards are all 'real', normal cards, so things like schemes, tokens, and half of a split card are not included. </p>
         <p> Facts about cards are always from the most recent printing, potentially including weird things like rarity downshifts in commander products. However, it's guaranteed that if there are 4 cards that match on set, they're from a 'normal' set that was released for standard play. </p>
         <p> Mousing over a 3-letter set symbol will display it's full name. </p> 
 
