@@ -7,8 +7,8 @@
     <title>Magic</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<button style="display: none;" id="newGameButton" class="new-game-button"> New Game </button>
 <div style="display: flex; flex-direction: row">
+    <button style="height: 25px" id="openRulesButton" class="open-rules-button"> Open Rules </button>
     <div class="toast" id="toast"> ASDF </div>
     <h2 class="total-cost" id="totalCost"> </h2>
 </div>
@@ -57,6 +57,32 @@
     </div>
     <div class="button-holder">
         <button class="submit-button" id="submitButton"> Submit Guess (Costs 5 if you're wrong) </button>
+    </div>
+<div id="rulesModalOverlay" class="modal-overlay">
+    <div id="rulesModal" class="rules-modal">
+        <h1>How to play</h1>
+        <p> Your goal is to categorize the cards into the four categories displayed in a 2x2 grid at the bottom. In doing so, there are two fundamental actions you can take: guessing and buying. </p>
+        <p> Your score is displayed at the top. Once you've got the hang of it, I recommend playing with a timer. </p>
+
+        <h2>Buying</h2>
+        <p> You can buy facts about the cards. The menu of facts and prices is in the bottom left. In order to buy a fact, click the button in the shop, and then click on the card you wish to purchase. </p>
+
+        <h2>Guessing</h2>
+        <p> A guess is a set of 4 cards and a property that you think they share. To guess, click on the property you want to guess, and then the 4 cards you want to guess on. You can remove cards from a guess by selecting any property and then clicking on them. The blue background means 'is part of a guess'. To submit a guess, click the submit button. </p> 
+        <p> Guessing incorrectly costs you 5 points. Guessing correctly is free. </p>
+
+        <h2>Clarifications/Miscellanea</h2>
+        <p> In all cases, the properties are an exact match. For example, for cards to match on type, they would all have to be a Tribal Sorcery, or a Legendary Artifact Creature. Submitting three artifact creatures and a legendary artifact creature will never be correct. Similarly, a 0 power creature and a * power creature are different. But a land and a 0 drop have the same CMC, since those are both exactly 0. </p>
+        <p> There are exactly 4 cards that match on each property. For example, if there are 5 commons, it will never be correct to submit a subset of 4 of them for 'type'. </p>
+        <p> The cards are all 'real', normal cards, so things like schemes or tokens are not included. </p>
+        <p> Facts about cards are always from the most recent printing, potentially including weird things like rarity downshifts in commander products. However, it's guaranteed that if there are 4 cards that match on set, they're from a 'normal' set that was released for standard play. </p>
+        <p> Mousing over a 3-letter set symbol will display it's full name. </p> 
+
+        <h2>Hotkeys</h2>
+        <p> <b> Ctrl alt n </b> - new game </p>
+        <p> <b> Ctrl alt r </b> - open this pop up </p>
+        <p> <b> Ctrl enter </b> - submit guess </p>
+        <p> You can select the purchase buttons with the hotkey in parentheses next to the button, e.g. p for Power / Toughness. </p>
     </div>
 </div>
 

@@ -69,6 +69,11 @@ def include_card(card):
                 break
             if t not in real_types:
                 return False
+            try:
+                # For things like meld cards
+                int(card['collector_number'])
+            except:
+                return False
         return card['legalities']['vintage'] != 'not_legal' and not card.get('card_faces')
     except KeyError:
         return False

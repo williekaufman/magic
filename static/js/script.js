@@ -6,6 +6,9 @@ totalCost = 0;
 toastElement = document.getElementById('toast');
 totalCostElement = document.getElementById('totalCost');
 
+rulesModal = document.getElementById('rulesModal');
+rulesModalOverlay = document.getElementById('rulesModalOverlay');
+
 attribute = null;
 cost = null;
 category = null;
@@ -32,8 +35,8 @@ function updateCurrentAction(action) {
     currentAction = action;
 }
 
-document.getElementById('newGameButton').addEventListener('click', event => {
-    newGame();
+document.getElementById('openRulesButton').addEventListener('click', event => {
+    openModal();
 });
 
 buttons.forEach(button => {
@@ -463,6 +466,16 @@ attributeElements.forEach(element => {
 });
 
 function handleKeyDown(event) {
+    if (event.ctrlKey && event.altKey) {
+        event.preventDefault();
+        if (event.key == 'n') {
+            newGame();
+        } else if (event.key == 'r') {
+            openModal();  
+        } else if (event.key == 'u') {
+            unhideAll();
+        }
+    }
     if (event.key == 'r') {
         rulesTextButton.click();
     } else if (event.key == 't') {
@@ -479,15 +492,34 @@ function handleKeyDown(event) {
         rarityButton.click();
     } else if (event.ctrlKey && event.key == 'Enter') {
         submitButton.click();
-    } else if (event.ctrlKey && event.altKey && event.key == 'n') {
-        newGame();
-    } else if (event.ctrlKey && event.altKey && event.key == 'u') {
-        unhideAll();
+    } else if (event.key == 'Escape') {
+        closeModal();
     }
 }
 
 document.addEventListener('keydown', handleKeyDown);
 
 rulesTextButton.click();
+
+function openModal() {
+    rulesModal.style.display = 'block';
+    rulesModalOverlay.style.display = 'block';
+}
+
+function closeModal() {
+    rulesModal.style.display = 'none';
+    rulesModalOverlay.style.display = 'none';
+}
+
+document.addEventListener('click', event => {
+    if (event.target == rulesModalOverlay) {
+        closeModal();
+    }
+});
+
+if (!localStorage.getItem('magic-connections-cookie')) {
+    openModal();
+    localStorage.setItem('magic-connections-cookie', 'true');
+}
 
 newGame();
