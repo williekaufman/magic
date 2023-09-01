@@ -499,8 +499,6 @@ function handleKeyDown(event) {
 
 document.addEventListener('keydown', handleKeyDown);
 
-rulesTextButton.click();
-
 function openModal() {
     rulesModal.style.display = 'block';
     rulesModalOverlay.style.display = 'block';
