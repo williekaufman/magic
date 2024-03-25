@@ -83,4 +83,4 @@ if __name__ == "__main__":
         cards = json.load(f)
     cards = {card['name']: Card(card) for card in cards if include_card(card)}
     check_rules(cards)
-    app.run(host='0.0.0.0', port=5005)
+    app.run(host='0.0.0.0', port=5020)
